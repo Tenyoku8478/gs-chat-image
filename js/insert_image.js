@@ -1,18 +1,70 @@
+
 function init() {
     if($('.inputStage').length > 0) {
-        var image_button = $('<div></div>').addClass('insertImageButton');
-        $('.inputStage').css('position', 'relative').append(image_button);
-        image_button.click(function() {
-            var url = prompt('請輸入圖片網址', '');
-            if(url) {
-                var textarea = $('.inputStage textarea');
-                var content = textarea.val();
-                if(content != '') content += ' ';
-                textarea.val(content+'{{['+url+']}}');
-                textarea.focus();
-            }
+        $.get(
+            url = chrome.extension.getURL('html/modal.html'),
+            success = function(data, state, jqXHR) {
+                var modal = $(data)
+                $('body').append(modal); //z-index of modal is 1050
+                $('.chatroom').css('z-index', 1000);
+
+                var image_button = $('<div></div>').addClass('insertImageButton');
+                $('.inputStage').css('position', 'relative').append(image_button);
+
+                function insertImage(url) {
+                    modal.modal('hide');
+                    var textarea = $('.inputStage textarea');
+                    var content = textarea.val();
+                    if(content != '') content += ' ';
+                    textarea.val(content+'{{['+url+']}}');
+                    textarea.focus();
+                    chrome.storage.local.get('recentlyUsedImages', function(imageArray) {
+                        imageArray = imageArray.recentlyUsedImages;
+                        if(!imageArray) {
+                            imageArray = new Array();
+                        }
+                        var index = imageArray.indexOf(url);
+                        if(index != -1) {
+                            imageArray.splice(index, 1);
+                        }
+                        if(imageArray.length >= 20) {
+                            imageArray.pop();
+                        }
+                        imageArray.unshift(url);
+                        chrome.storage.local.set({'recentlyUsedImages': imageArray});
+                    });
+                };
+
+                image_button.click(function() {
+                    modal.modal('show');
+                    chrome.storage.local.get('recentlyUsedImages', function(imageArray) {
+                        imageArray = imageArray.recentlyUsedImages;
+                        if(imageArray) {
+                            var images = $('#recentlyUsedImages');
+                            images.html('');
+                            for(var i=0; i<imageArray.length; i=i+1) {
+                                images.append('<img src="'+imageArray[i]+'" />');
+                            }
+                            images.find('img').click(function() {
+                                insertImage($(this).attr('src'));
+                            });
+                        }
+                    });
+                });
+
+                modal.find('#insertUrl').keypress(function(event) {
+                    var $this = $(this);
+                    if(event.which == 13) {
+                        if($this.val()) {
+                            var url = $this.val();
+                            $this.val('');
+                            insertImage(url);
+                        }
+                    }
+                });
+
+                transfer();
         });
-        transfer();
     }
     else {
         setTimeout(init, 1000);
