@@ -1,7 +1,7 @@
 .modal-open {
   overflow: hidden;
 }
-.modal {
+.modal.fade {
   display: none;
   overflow: hidden;
   position: fixed;
@@ -9,7 +9,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1050;
+  z-index: 20010;
   -webkit-overflow-scrolling: touch;
   outline: 0;
 }
@@ -55,7 +55,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1040;
+  z-index: 20000;
   background-color: #000000;
 }
 .modal-backdrop.fade {

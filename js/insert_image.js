@@ -6,7 +6,6 @@ function init() {
             success = function(data, state, jqXHR) {
                 var modal = $(data)
                 $('body').append(modal); //z-index of modal is 1050
-                $('.chatroom').css('z-index', 1000);
 
                 var image_button = $('<div></div>').addClass('insertImageButton');
                 $('.inputStage').css('position', 'relative').append(image_button);

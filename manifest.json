@@ -3,7 +3,7 @@
 
     "name": "GS chatroom insert image plugin",
     "description": "為GS聊天室加入插入圖片功能",
-    "version": "1.0.0.2",
+    "version": "1.0.0.2.1",
 
     "permissions": [
         "storage",
