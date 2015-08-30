@@ -1,0 +1,18 @@
+.inputStage {
+    position: relative;
+}
+.chatroom .inputStage div.insertImageButton {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 40px;
+    height: 100%;
+    background: url('chrome-extension://__MSG_@@extension_id__/img/button.png');
+    background-color: lightgray;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.msg img {
+    width: 100%;
+    max-width: 250px;
+}

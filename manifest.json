@@ -1,0 +1,19 @@
+{
+    "manifest_version": 2,
+
+    "name": "GS chatroom insert image plugin",
+    "description": "Test",
+    "version": "1.0.0.1",
+
+    "permissions": [
+        "http://gameschool.cc/site/chat/"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["http://gameschool.cc/site/chat/"],
+            "css": ["css/style.css"],
+            "js": ["js/jquery-2.1.4.min.js", "js/insert_image.js"]
+        }
+    ],
+    "web_accessible_resources": ["img/button.png"]
+}
